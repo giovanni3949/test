@@ -1,0 +1,45 @@
+<?php
+/*Borre la contraseña porque la otra vez nos regaño por subirlas a una pagina publica jeje
+ * 
+ * archivo bd_info.inc
+ * <?php
+//Guardo la información para la conexion a mi BD
+$host   = 'localhost';
+$user 	= 'root';
+$pass 	= '';
+$bd		= 'Pruebas_Clase';
+
+?>  
+ * */
+class miConexion{
+
+	function conectar(){
+		
+		require_once('bd_info.inc');
+		
+		@$mysqli = new mysqli('localhost', 'root','', 'Pruebas_Clase');
+		if ( isset($mysqli -> connect_errno) && !empty($mysqli -> connect_errno) )
+			echo 'ERROR: '.$mysqli -> connect_error;
+		else{
+			var_dump($mysqli);
+			//query de un Id especifico donde id es auntoincrementable al hacer un insert
+			$miQuery = 'SELECT	*
+						FROM Pruebas_Clase.Insert_Practica					
+						WHERE Id = 1';
+			//insert en tabla Pruebas_Clase.Insert_Practica donde existen los campos id(int_Key),Nombre(varchar(200)),Correo(varchar(50))
+			//$miquery = "INSERT INTO Pruebas_Clase.Insert_Practica VALUES (NULL, 'Giovanni', 'giovanni3949@ymail.com')";			
+			echo 'Insercion correcta';
+			
+			$resultado = $mysqli -> query($miQuery);
+			var_dump($resultado);
+
+			$mysqli -> close();
+			//$resultadoArray = $resultado -> fetch_all(MYSQL_ASSOC);
+			while($fila = $resultado -> fetch_assoc())
+				var_dump($fila);
+		}
+	}
+}
+
+$mc = new miConexion();
+$mc -> conectar();
